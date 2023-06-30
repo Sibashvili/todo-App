@@ -13,14 +13,13 @@ export default {
       boxShadow: {
         "3xl": "0px 35px 50px -15px rgba(194, 195, 214, 0.50);",
       },
+
       colors: {
+        "input-back": "#25273D",
         customGrayishBlue: "#9495A5",
-      },
-      colorsback: {
         customBack: "#FAFAFA",
-      },
-      colors: {
-        fontColor: "#494C6B",
+        textColor: "#5B5E7E",
+        textLight: "#9495A5",
       },
 
       fontFamily: {

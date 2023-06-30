@@ -22,9 +22,9 @@ function App() {
       if (inputValue.trim() !== "") {
         const newTodo = {
           command: inputValue,
-
-          backgroundColor: "red",
+          active: true,
         };
+
         setTodos([...todos, newTodo]);
         setInputValue("");
       }
@@ -44,14 +44,22 @@ function App() {
     console.log(theme);
   };
   return (
-    <div className={"w-full  "}>
+    <div
+      className={`w-full h-screen bg-customBack ${
+        theme === "dark" ? " bg-input-back" : " bg-customBack"
+      } `}
+    >
       <div
         className={`  bg-no-repeat h-[200px] w-full ${
           theme === "dark" ? "bg-mobile-dark" : "bg-mobile-light"
         }  `}
       >
         <div className=" flex px-[26px] w-full justify-between x items-center  ">
-          <img className=" w-[109px] h-[20px] mt-[48px]    " src={To} alt="" />
+          <img
+            className=" w-[109px]  h-[20px] mt-[48px]     "
+            src={To}
+            alt=""
+          />
           <div>
             {theme === "dark" ? (
               <div>
@@ -74,13 +82,17 @@ function App() {
           </div>
         </div>
 
-        <div className=" flex justify-center m-auto mt-[40px] bg-white w-[327px] h-[48px] rounded    items-center ">
-          <button className="w-[20px] h-[20px] rounded-full border-2 border-solid bg-transparent bg-opacity-100 ml-[10px]  "></button>
+        <div
+          className={`flex justify-center m-auto mt-[40px] w-[327px] h-[48px] rounded bg-white    items-center ${
+            theme === "dark" ? "bg-[#25273D]" : "bg-white"
+          }  `}
+        >
+          <button className="w-[20px] h-[20px] rounded-full border-2 border-solid bg-transparent bg-opacity-100 ml-[10px] "></button>
           <input
             value={inputValue}
             onChange={handleInputChange}
             onKeyDown={handleKeyPress}
-            className="  w-[290px] h-[48px] ml-[10px] border-none focus:outline-none font-normal   "
+            className="w-[290px] h-[48px] ml-[10px] border-none focus:outline-none font-normal bg-transparent    "
             type="text"
             placeholder="Create a new todo…"
           />
@@ -108,7 +120,13 @@ function App() {
             </span>
             <button className="text-customGrayishBlue">Clear Comleted</button>
           </div>
-          <div className=" mt-[16px] w-[327px]  flex bg-white gap-6 h-[48px] items-center justify-center  ">
+          <div
+            className={` mt-[16px] w-[327px]  flex  gap-6 h-[48px] items-center justify-center  ${
+              theme === "dark"
+                ? "bg-input-back text-textColor"
+                : " bg-customBack text"
+            } `}
+          >
             <button>All</button>
             <button>Active</button>
             <button>Completed</button>
