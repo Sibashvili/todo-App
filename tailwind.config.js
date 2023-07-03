@@ -20,6 +20,11 @@ export default {
         customBack: "#FAFAFA",
         textColor: "#5B5E7E",
         textLight: "#9495A5",
+
+        background: "#171823;",
+        "text-color": "#767992",
+        textdark: "#C8CBE7",
+        borderColor: "#393A4B",
       },
 
       fontFamily: {

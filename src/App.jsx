@@ -13,6 +13,8 @@ function App() {
   const [theme, setTheme] = useState("light");
   const [todos, setTodos] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [active, setActive] = useState(false);
+
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
@@ -22,7 +24,7 @@ function App() {
       if (inputValue.trim() !== "") {
         const newTodo = {
           command: inputValue,
-          active: true,
+          active,
         };
 
         setTodos([...todos, newTodo]);
@@ -43,10 +45,17 @@ function App() {
 
     console.log(theme);
   };
+  const handleToggleTask = (index) => {
+    const updatedTodos = [...todos];
+    console.log(updatedTodos);
+    updatedTodos[index].active = !updatedTodos[index].active;
+    setTodos(updatedTodos);
+  };
+
   return (
     <div
-      className={`w-full h-screen bg-customBack ${
-        theme === "dark" ? " bg-input-back" : " bg-customBack"
+      className={`w-full h-screen ${
+        theme === "dark" ? " bg-background" : " bg-customBack"
       } `}
     >
       <div
@@ -83,11 +92,20 @@ function App() {
         </div>
 
         <div
-          className={`flex justify-center m-auto mt-[40px] w-[327px] h-[48px] rounded bg-white    items-center ${
-            theme === "dark" ? "bg-[#25273D]" : "bg-white"
+          className={`flex justify-center m-auto mt-[40px] w-[327px] h-[48px] rounded     items-center ${
+            theme === "dark"
+              ? " bg-input-back text-text-color"
+              : " bg-customBack"
           }  `}
         >
-          <button className="w-[20px] h-[20px] rounded-full border-2 border-solid bg-transparent bg-opacity-100 ml-[10px] "></button>
+          <button
+            onClick={() => setActive(!active)}
+            className={`w-[20px] h-[20px] rounded-full border-2 border-solid bg-transparent   ml-[10px] flex justify-center items-center   
+          ${active ? "bg-gradient-to-br from-[#55DDFF] to-[#C058F3]" : ""} `}
+          >
+            {active ? <img src={Check} alt="" /> : null}
+          </button>
+
           <input
             value={inputValue}
             onChange={handleInputChange}
@@ -99,13 +117,33 @@ function App() {
         </div>
       </div>
       {todos.length > 0 && (
-        <ul className=" mt-[-19px] text-fontColor   w-[327px] mx-auto block border-t-8 border-white   rounded-t-lg text-[12px] font-normal   ">
+        <ul
+          style={{ borderRadius: "50%" }}
+          className="  mt-[-19px] text-fontColor bg-transparent    w-[327px] mx-auto    rounded-lg text-[12px] font-normal  "
+        >
           {todos.map((todo, index) => (
             <li
-              className=" w-full    border-b   bg-white border-gray-300 h-1 bg-transparent  p-6 flex   items-center justify-between  "
+              className={` w-full    border-b py-[16px]  px-[20px] flex   items-center justify-between first:rounded-t-lg ${
+                theme === "dark"
+                  ? " bg-input-back border-[#393A4B] text-textdark  "
+                  : " bg-white border-[#E3E4F1]"
+              }  `}
               key={index}
             >
-              {todo.command}
+              <div className="  gap-[16px] flex    ">
+                <button
+                  onClick={() => handleToggleTask(index)}
+                  className={`w-[20px] h-[20px] rounded-full border-2 border-solid bg-transparent bg-opacity-100 ml-[10px] justify-center items-center flex  ${
+                    todo.active
+                      ? "bg-gradient-to-br from-[#55DDFF] to-[#C058F3]"
+                      : ""
+                  } `}
+                >
+                  {todo.active ? <img src={Check} alt="" /> : null}
+                </button>
+                {todo.command}
+              </div>
+
               <img
                 className=" cursor-pointer"
                 src={Cross}
@@ -114,25 +152,31 @@ function App() {
               />
             </li>
           ))}
-          <div className="border-b rounded-b-lg p-[20px]  shadow-3xl bg-white border-gray-300 flex items-center justify-between ">
-            <span className=" text-customGrayishBlue">
-              {todos.length} items left
-            </span>
-            <button className="text-customGrayishBlue">Clear Comleted</button>
-          </div>
-          <div
-            className={` mt-[16px] w-[327px]  flex  gap-6 h-[48px] items-center justify-center  ${
-              theme === "dark"
-                ? "bg-input-back text-textColor"
-                : " bg-customBack text"
-            } `}
-          >
-            <button>All</button>
-            <button>Active</button>
-            <button>Completed</button>
-          </div>
         </ul>
       )}
+      <div
+        className={`p-[20px] w-[327px] mx-auto      shadow-3xl   border-gray-300 flex items-center justify-between rounded-b-lg ${
+          theme === "dark"
+            ? " bg-input-back text-textColor"
+            : "bg-white text-textLight"
+        }  `}
+      >
+        <span className=" text-customGrayishBlue">
+          {todos.length} items left
+        </span>
+        <button className="text-customGrayishBlue">Clear Comleted</button>
+      </div>
+      <div
+        className={` mt-[16px] w-[327px]  flex  gap-6 h-[48px] items-center mx-auto shadow-3xl  justify-center  ${
+          theme === "dark"
+            ? "bg-input-back text-textColor"
+            : " bg-[#fff] text text-textLight"
+        } `}
+      >
+        <button>All</button>
+        <button>Active</button>
+        <button>Completed</button>
+      </div>
     </div>
   );
 }
