@@ -14,6 +14,7 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [active, setActive] = useState(false);
+  const [filter, setActiveFilter] = useState("all");
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -37,9 +38,7 @@ function App() {
     updatedTodos.splice(index, 1);
     setTodos(updatedTodos);
   };
-  const handleFilterClick = (filter) => {
-    setActiveFilter(filter);
-  };
+
   const handleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
 
@@ -49,6 +48,19 @@ function App() {
     const updatedTodos = [...todos];
     console.log(updatedTodos);
     updatedTodos[index].active = !updatedTodos[index].active;
+    setTodos(updatedTodos);
+  };
+  const filteredTodos = todos.filter((todo) => {
+    if (filter === "all") {
+      return true;
+    } else if (filter === "active") {
+      return !todo.active;
+    } else if (filter === "completed") {
+      return todo.active;
+    }
+  });
+  const handleClearCompleted = () => {
+    const updatedTodos = todos.filter((todo) => !todo.active);
     setTodos(updatedTodos);
   };
 
@@ -121,7 +133,7 @@ function App() {
           style={{ borderRadius: "50%" }}
           className="  mt-[-19px] text-fontColor bg-transparent    w-[327px] mx-auto    rounded-lg text-[12px] font-normal  "
         >
-          {todos.map((todo, index) => (
+          {filteredTodos.map((todo, index) => (
             <li
               className={` w-full    border-b py-[16px]  px-[20px] flex   items-center justify-between first:rounded-t-lg ${
                 theme === "dark"
@@ -164,7 +176,12 @@ function App() {
         <span className=" text-customGrayishBlue">
           {todos.length} items left
         </span>
-        <button className="text-customGrayishBlue">Clear Comleted</button>
+        <button
+          onClick={handleClearCompleted}
+          className="text-customGrayishBlue"
+        >
+          Clear Comleted
+        </button>
       </div>
       <div
         className={` mt-[16px] w-[327px]  flex  gap-6 h-[48px] items-center mx-auto shadow-3xl  justify-center  ${
@@ -173,9 +190,9 @@ function App() {
             : " bg-[#fff] text text-textLight"
         } `}
       >
-        <button>All</button>
-        <button>Active</button>
-        <button>Completed</button>
+        <button onClick={() => setActiveFilter("all")}>All</button>
+        <button onClick={() => setActiveFilter("active")}>Active</button>
+        <button onClick={() => setActiveFilter("completed")}>Completed</button>
       </div>
     </div>
   );
