@@ -73,8 +73,8 @@ function App() {
       <div
         className={`  bg-no-repeat h-[200px] w-full ${
           theme === "dark"
-            ? "bg-mobile-dark xl:bg-desktop-dark xl:h-[300px]"
-            : "bg-mobile-light xl:bg-desktop-light xl:h-[300px] "
+            ? "bg-mobile-dark h-[200px] xl:bg-desktop-dark xl:h-[300px]"
+            : "bg-mobile-light h-[200px] xl:bg-desktop-light xl:h-[300px] "
         }  `}
       >
         <div className=" flex px-[26px] xl:pr-[450px] xl:pl-[450px] w-full justify-between x items-center  ">
@@ -106,7 +106,7 @@ function App() {
         </div>
 
         <div
-          className={`flex justify-center m-auto mt-[40px]  w-[327px] xl:w-[540px] h-[48px] xl:h-[64px] rounded     items-center ${
+          className={`flex justify-center m-auto mt-[40px]  w-[327px] xl:w-[540px] h-[48px] xl:h-[64px] rounded xl:justify-start     items-center ${
             theme === "dark"
               ? " bg-input-back text-text-color"
               : " bg-customBack"
@@ -115,7 +115,11 @@ function App() {
           <button
             onClick={() => setActive(!active)}
             className={`w-[20px] h-[20px] rounded-full border-2 border-solid bg-transparent   ml-[10px] flex justify-center items-center   
-          ${active ? "bg-gradient-to-br from-[#55DDFF] to-[#C058F3]" : ""} `}
+          ${
+            active
+              ? " border-none bg-gradient-to-br from-[#55DDFF] to-[#C058F3]"
+              : ""
+          } `}
           >
             {active ? <img src={Check} alt="" /> : null}
           </button>
@@ -130,59 +134,86 @@ function App() {
           />
         </div>
       </div>
-      {todos.length > 0 && (
-        <ul
-          style={{ borderRadius: "50%" }}
-          className="  mt-[-19px] xl:mt-[-75px] text-fontColor bg-transparent    w-[327px] xl:w-[492px] xl:h-[24px] mx-auto    rounded-lg text-[12px] xl:text-[18px] font-normal  "
-        >
-          {filteredTodos.map((todo, index) => (
-            <li
-              className={` w-full    border-b py-[16px]  px-[20px] flex   items-center justify-between first:rounded-t-lg ${
-                theme === "dark"
-                  ? " bg-input-back border-[#393A4B] text-textdark  "
-                  : " bg-white border-[#E3E4F1]"
-              }  `}
-              key={index}
-              style={{
-                textDecoration: !todo.active ? "none" : "line-through",
-                color: todo.active ? "#D1D2DA" : "inherit",
-              }}
-            >
-              <div className="  gap-[16px] flex    ">
-                <button
-                  onClick={() => handleToggleTask(index)}
-                  className={`w-[20px] h-[20px] rounded-full border-2 border-solid bg-transparent bg-opacity-100 ml-[10px] justify-center items-center flex  ${
-                    todo.active
-                      ? "bg-gradient-to-br from-[#55DDFF] to-[#C058F3]"
-                      : ""
-                  } `}
-                >
-                  {todo.active ? <img src={Check} alt="" /> : null}
-                </button>
-                {todo.command}
-              </div>
 
-              <img
-                className=" cursor-pointer"
-                src={Cross}
-                alt=""
-                onClick={handleRemoveTask}
-              />
-            </li>
-          ))}
-        </ul>
-      )}
-      <div className=" xl:flex xl:bg-white ">
+      <ul
+        style={{ borderRadius: "50%" }}
+        className="  mt-[-19px] xl:mt-[-75px] text-fontColor bg-transparent    w-[327px] xl:w-[540px] xl:h-[24px] mx-auto    rounded-lg text-[12px] xl:text-[18px] font-normal  "
+      >
+        {filteredTodos.map((todo, index) => (
+          <li
+            className={` w-full xl:w-[540px] xl:    border-b py-[16px]  px-[20px] flex   items-center justify-between first:rounded-t-lg  ${
+              theme === "dark"
+                ? " bg-input-back border-[#393A4B] text-textdark  "
+                : " bg-white border-[#E3E4F1]"
+            }  `}
+            key={index}
+            style={{
+              textDecoration: !todo.active ? "#4D5067" : "line-through",
+              color: todo.active ? "#C8CBE7" : "#4D5067",
+            }}
+          >
+            <div className=" ml-[-19px]   gap-[16px] flex    ">
+              <button
+                onClick={() => handleToggleTask(index)}
+                className={`w-[20px] h-[20px] rounded-full border-2 border-solid bg-transparent bg-opacity-100 ml-[10px] justify-center items-center flex  ${
+                  todo.active
+                    ? " border-none bg-gradient-to-br from-[#55DDFF] to-[#C058F3]"
+                    : ""
+                } `}
+              >
+                {todo.active ? <img src={Check} alt="" /> : null}
+              </button>
+
+              {todo.command}
+            </div>
+
+            <img
+              className=" cursor-pointer"
+              src={Cross}
+              alt=""
+              onClick={handleRemoveTask}
+            />
+          </li>
+        ))}
         <div
-          className={`p-[20px] w-[327px] mx-auto      shadow-3xl   border-gray-300 flex items-center justify-between rounded-b-lg ${
+          className={`p-[20px] w-[327px] xl:w-[540px]    mx-auto       shadow-3xl   border-gray-300 flex items-center justify-between rounded-b-lg ${
             theme === "dark"
               ? " bg-input-back text-textColor"
-              : "bg-white text-textLight"
+              : "bg-[#fff] text-textLight"
           }  `}
         >
-          <span className=" text-customGrayishBlue">
+          <span className=" text-customGrayishBlue ">
             {todos.length} items left
           </span>
+
+          <div className=" xl:flex  xl:gap-[19px] hidden ">
+            <button
+              className={`${
+                filter === "all" ? "text-blue-500 font-bold" : ""
+              } cursor-pointer`}
+              onClick={() => setActiveFilter("all")}
+            >
+              {" "}
+              All
+            </button>
+            <button
+              className={`${
+                filter === "active" ? "text-blue-500 font-bold" : ""
+              } cursor-pointer`}
+              onClick={() => setActiveFilter("active")}
+            >
+              Active
+            </button>
+            <button
+              className={`${
+                filter === "completed" ? "text-blue-500 font-bold" : ""
+              } cursor-pointer`}
+              onClick={() => setActiveFilter("completed")}
+            >
+              Completed
+            </button>
+          </div>
+
           <button
             onClick={handleClearCompleted}
             className="text-customGrayishBlue"
@@ -190,36 +221,39 @@ function App() {
             Clear Comleted
           </button>
         </div>
-        <div
-          className={` mt-[16px] w-[327px]  flex  gap-6 h-[48px] items-center mx-auto shadow-3xl  justify-center  ${
-            theme === "dark"
-              ? "bg-input-back text-textColor"
-              : " bg-[#fff] text text-textLight"
-          } `}
+      </ul>
+
+      <div
+        className={` mt-[16px] w-[327px]  flex  gap-6 h-[48px] items-center mx-auto shadow-3xl  justify-center xl:hidden   ${
+          theme === "dark"
+            ? "bg-input-back text-textColor"
+            : " bg-[#fff] text text-textLight"
+        } `}
+      >
+        <button
+          className={`${
+            filter === "all" ? "text-blue-500 font-bold" : ""
+          } cursor-pointer`}
+          onClick={() => setActiveFilter("all")}
         >
-          <button
-            className={`${filter === "all" ? "text-blue-500 font-bold" : ""}`}
-            onClick={() => setActiveFilter("all")}
-          >
-            All
-          </button>
-          <button
-            className={`${
-              filter === "active" ? "text-blue-500 font-bold" : ""
-            }`}
-            onClick={() => setActiveFilter("active")}
-          >
-            Active
-          </button>
-          <button
-            className={`${
-              filter === "completed" ? "text-blue-500 font-bold" : ""
-            }`}
-            onClick={() => setActiveFilter("completed")}
-          >
-            Completed
-          </button>
-        </div>
+          All
+        </button>
+        <button
+          className={`${
+            filter === "active" ? "text-blue-500 font-bold" : ""
+          } cursor-pointer`}
+          onClick={() => setActiveFilter("active")}
+        >
+          Active
+        </button>
+        <button
+          className={`${
+            filter === "completed" ? "text-blue-500 font-bold" : ""
+          } cursor-pointer`}
+          onClick={() => setActiveFilter("completed")}
+        >
+          Completed
+        </button>
       </div>
     </div>
   );
