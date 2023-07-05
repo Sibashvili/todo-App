@@ -7,3 +7,18 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+@layer utilities {
+  .bg-mobile-light {
+    background-image: url(./assets/bg-mobile-light.jpg);
+  }
+  .bg-mobile-dark {
+    background-image: url(./assets/bg-mobile-dark.jpg);
+  }
+  .bg-desktop-light {
+    background-image: url(./assets/bg-desktop-light.jpg);
+  }
+  .bg-desktop-dark {
+    background-image: url(./assets/bg-desktop-dark.jpg);
+  }
+}
