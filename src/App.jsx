@@ -66,12 +66,12 @@ function App() {
 
   return (
     <div
-      className={`w-full h-screen ${
+      className={`max-w-screen bg-cover h-screen ${
         theme === "dark" ? " bg-background " : " bg-customBack"
       } `}
     >
       <div
-        className={`  bg-no-repeat h-[200px] w-full ${
+        className={` max-w-screen bg-cover  bg-no-repeat h-[200px] w-full ${
           theme === "dark"
             ? "bg-mobile-dark h-[200px] xl:bg-desktop-dark xl:h-[300px]"
             : "bg-mobile-light h-[200px] xl:bg-desktop-light xl:h-[300px] "
